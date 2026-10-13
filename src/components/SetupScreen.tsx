@@ -9,7 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { PRESETS } from "../game/presets";
-import { Button } from "../theme";
+import { Button, Panel, TextArea } from "../theme";
 import cn from "../utils/classnames";
 
 interface SetupScreenProps {
@@ -76,17 +76,12 @@ export default function SetupScreen({
           );
         })}
       </div>
-      <div className="grid gap-6 rounded-3xl border border-slate-700 bg-slate-900 p-5 sm:p-8 lg:grid-cols-2">
+      <Panel className="grid gap-6 rounded-3xl p-5 sm:p-8 lg:grid-cols-2">
         <div className="flex flex-col">
           <label className="arcade-label flex items-center gap-2" htmlFor="prompt">
             <MessageSquare size={14} /> Your mission
           </label>
-          <textarea
-            id="prompt"
-            value={prompt}
-            readOnly
-            className="field mt-3 h-36 shrink-0 resize-none text-base leading-7"
-          />
+          <TextArea id="prompt" value={prompt} readOnly className="mt-3 h-36 shrink-0" />
           <div className="mt-6 rounded-xl border border-slate-700 bg-slate-950/50 p-4">
             <h3 className="flex items-center gap-2 text-sm font-bold text-lime-300">
               <Dices size={16} /> How to play
@@ -105,7 +100,8 @@ export default function SetupScreen({
           <label className="arcade-label flex items-center gap-2" htmlFor="constraint">
             <ShieldCheck size={14} /> The rules
           </label>
-          <textarea
+          <TextArea
+            code
             id="constraint"
             spellCheck={false}
             readOnly
@@ -114,17 +110,14 @@ export default function SetupScreen({
                 ? "{ /* any valid JSON object */ }\n\nNo extra schema. Just a valid JSON object. You choose what goes inside."
                 : constraint
             }
-            className="field mt-3 min-h-64 flex-1 resize-none font-mono text-sm leading-6"
+            className="mt-3 min-h-64 flex-1"
           />
         </div>
-      </div>
+      </Panel>
       {error && (
-        <p
-          role="alert"
-          className="mt-5 rounded-xl border border-rose-400/40 bg-rose-400/10 p-4 text-sm text-rose-200"
-        >
+        <Panel tone="danger" role="alert" className="mt-5 rounded-xl p-4 text-sm text-rose-200">
           {error}
-        </p>
+        </Panel>
       )}
       <div className="mt-8 flex flex-col items-center gap-4">
         <Button className="px-10 py-4 text-base" disabled={!prompt.trim()} onClick={onStart}>

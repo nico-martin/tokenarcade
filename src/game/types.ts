@@ -18,36 +18,6 @@ export interface TokenStep {
   tokenCount: number;
 }
 
-export type WorkerRequest =
-  | { type: "start"; settings: GameSettings; roundId: number }
-  | { type: "guess"; tokenId: number }
-  | { type: "explain"; tokenId: number; turn: number; requestId: number }
-  | { type: "cancel_explanation"; requestId: number }
-  | { type: "reset" };
-
-export type WorkerResponsePayload =
-  | { type: "model_loaded" }
-  | { type: "status"; message: string; progress?: number }
-  | { type: "vocabulary"; labels: string[]; eosTokenId: number; terminationTokenIds: number[] }
-  | { type: "step"; step: TokenStep }
-  | { type: "explanation"; requestId: number; text: string; done: boolean; error?: string }
-  | {
-      type: "guess";
-      tokenId: number;
-      correct: boolean;
-      points: number;
-      attempts: number;
-      totalPoints: number;
-      tokenCount: number;
-      text: string;
-      complete: boolean;
-      candidateText: string;
-      explanation: string;
-    }
-  | { type: "error"; message: string };
-
-export type WorkerResponse = WorkerResponsePayload & { roundId: number };
-
 export interface GuessFeedback {
   tokenId: number;
   correct: boolean;

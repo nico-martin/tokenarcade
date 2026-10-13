@@ -1,4 +1,5 @@
 import { Check, CircleHelp, MousePointer2, X } from "lucide-react";
+import { Button } from "../theme";
 import cn from "../utils/classnames";
 import { formatProbability } from "../utils/scoring";
 import { readableToken, visibleWhitespace } from "../utils/tokens";
@@ -92,14 +93,16 @@ export default function TokenCard({
             {verdict === "correct" ? "Valid continuation" : "This continuation is blocked"}
           </span>
           {verdict === "wrong" && (
-            <button
+            <Button
+              variant="danger"
+              size="sm"
               onClick={onExplain}
               disabled={disabled}
-              className="mt-1 inline-flex items-center gap-1.5 rounded-lg border border-rose-300/40 bg-rose-900 px-3 py-1.5 text-xs font-bold text-rose-100 transition hover:bg-rose-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-200 disabled:opacity-50"
+              className="mt-1 gap-1.5 rounded-lg focus-visible:outline-rose-200"
             >
               <CircleHelp size={13} />
               Explain why
-            </button>
+            </Button>
           )}
         </div>
       </div>

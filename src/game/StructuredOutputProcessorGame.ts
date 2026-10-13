@@ -4,7 +4,7 @@ import { StructuredOutputProcessor } from "@huggingface/transformers-structured-
 import type { ResponseFormat } from "@huggingface/transformers-structured-output";
 import { softmax } from "../utils/scoring";
 
-/** A demo-local adapter. The mask stays in the worker, never in the token-list UI. */
+/** A demo-local adapter. Its mask stays private, never in the token-list UI. */
 export default class StructuredOutputProcessorGame {
   private readonly processor: StructuredOutputProcessor;
   private allowed = new Uint8Array();

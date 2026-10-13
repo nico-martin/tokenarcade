@@ -4,9 +4,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  worker: { format: "es" },
-  // These are imported only by the lazy worker. Prebundle them up front so
-  // Vite doesn't discover new dependencies and reload the page on first play.
+  // Prebundle the inference dependencies to avoid first-use development reloads.
   optimizeDeps: {
     include: ["@huggingface/transformers", "@huggingface/transformers-structured-output"],
   },

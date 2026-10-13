@@ -1,8 +1,8 @@
-import { Check, CheckCircle2, Cpu, LoaderCircle, XCircle } from "lucide-react";
+import { Check, CheckCircle2, Cpu, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import type useGame from "../game/useGame";
 import type { SoundCue } from "../game/useSound";
-import { Button } from "../theme";
+import { Button, Panel, Spinner } from "../theme";
 import cn from "../utils/classnames";
 import TutorialCards from "./TutorialCards";
 
@@ -73,7 +73,7 @@ export default function LaunchScreen({
       ) : (
         <>
           {tutorialDone ? (
-            <section className="w-full rounded-3xl border border-lime-300/30 bg-lime-300/5 p-8 text-center">
+            <Panel tone="success" className="w-full rounded-3xl p-8 text-center">
               <CheckCircle2 size={40} className="mx-auto text-lime-300" />
               <h1 className="mt-5 text-3xl font-black">You’re ready. Your deck is catching up.</h1>
               <p className="mt-3 text-sm leading-7 text-slate-400">
@@ -83,16 +83,16 @@ export default function LaunchScreen({
               <Button variant="secondary" className="mt-5" onClick={() => setTutorialDone(false)}>
                 Review the briefing
               </Button>
-            </section>
+            </Panel>
           ) : (
             <TutorialCards play={play} onComplete={() => setTutorialDone(true)} />
           )}
-          <div className="mt-8 w-full rounded-2xl border border-slate-700 bg-slate-900 p-5">
+          <Panel className="mt-8 w-full p-5">
             <div className="flex items-center gap-3 text-sm">
               {modelReady ? (
                 <CheckCircle2 size={16} className="shrink-0 text-lime-300" />
               ) : (
-                <LoaderCircle size={16} className="shrink-0 animate-spin text-lime-300" />
+                <Spinner size={16} className="text-lime-300" />
               )}
               <span role="status" className="min-w-0 flex-1">
                 {modelReady
@@ -119,7 +119,7 @@ export default function LaunchScreen({
                 <Check size={12} /> No server. Just you.
               </span>
             </div>
-          </div>
+          </Panel>
           <p className="mt-6 text-center text-xs text-slate-500">
             The model loads in parallel. Play starts only after the briefing and model preparation
             are both complete.

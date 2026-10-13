@@ -1,6 +1,6 @@
-import { Check, Copy, Download, Image, LoaderCircle, Sparkles } from "lucide-react";
+import { Check, Copy, Download, Image, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "../theme";
+import { Button, Disclosure, Spinner } from "../theme";
 import cn from "../utils/classnames";
 import {
   copyScoreImage,
@@ -148,20 +148,14 @@ export default function ScoreShareActions({
           />
         ) : (
           <div role="status" className="flex flex-col items-center gap-3 text-xs text-violet-300">
-            {error ? <Image size={24} /> : <LoaderCircle size={24} className="animate-spin" />}
+            {error ? <Image size={24} /> : <Spinner size={24} />}
             {error ? "Poster couldn't be prepared" : "Making your trophy…"}
           </div>
         )}
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <Button onClick={() => void copyImage()} disabled={!ready || busy} className="flex-1">
-          {busy ? (
-            <LoaderCircle size={16} className="animate-spin" />
-          ) : copied ? (
-            <Check size={16} />
-          ) : (
-            <Copy size={16} />
-          )}
+          {busy ? <Spinner size={16} /> : copied ? <Check size={16} /> : <Copy size={16} />}
           {copied ? "Image copied!" : "Copy image"}
         </Button>
         <Button
@@ -178,10 +172,11 @@ export default function ScoreShareActions({
           Save PNG
         </Button>
       </div>
-      <details className="mt-4 rounded-lg border border-slate-700 p-3">
-        <summary className="cursor-pointer text-xs font-semibold text-violet-300">
-          Need a caption? Borrow this one.
-        </summary>
+      <Disclosure
+        title="Need a caption? Borrow this one."
+        className="mt-4"
+        summaryClassName="text-violet-300"
+      >
         <p className="mt-3 select-text whitespace-pre-wrap break-words text-xs leading-6 text-slate-300">
           {caption}
         </p>
@@ -193,7 +188,7 @@ export default function ScoreShareActions({
           <Copy size={13} />
           Copy caption
         </Button>
-      </details>
+      </Disclosure>
       <p
         aria-live="polite"
         className={cn("mt-3 text-xs leading-5", {

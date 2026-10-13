@@ -1,7 +1,7 @@
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, ShieldCheck, Trophy, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { SoundCue } from "../game/useSound";
-import { Button } from "../theme";
+import { Button, Panel } from "../theme";
 import cn from "../utils/classnames";
 
 interface TutorialCardsProps {
@@ -117,22 +117,22 @@ function Anatomy() {
 function Gameplay() {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      <div className="rounded-xl border border-lime-300/30 bg-lime-300/10 p-4">
+      <Panel tone="success" className="rounded-xl p-4">
         <CheckCircle2 size={23} className="text-lime-300" />
         <h3 className="mt-2 font-bold text-lime-300">Green: it fits!</h3>
         <p className="mt-2 text-sm leading-6 text-slate-300">
           Add the token. The model scores the next step, and you get a fresh hand. You’re building
           the response one choice at a time.
         </p>
-      </div>
-      <div className="rounded-xl border border-rose-400/30 bg-rose-400/10 p-4">
+      </Panel>
+      <Panel tone="danger" className="rounded-xl p-4">
         <X size={23} className="text-rose-300" />
         <h3 className="mt-2 font-bold text-rose-300">Red: another try.</h3>
         <p className="mt-2 text-sm leading-6 text-slate-300">
           See the proposed response and why the choice is blocked. Your real response stays
           unchanged. The card stays flipped.
         </p>
-      </div>
+      </Panel>
       <p className="text-xs leading-6 text-slate-500 sm:col-span-2">
         Every hand has at least one permitted card. Search “All tokens” to explore the full
         vocabulary. Allowed means it fits the processor’s rules—not that it’s factually correct.
@@ -154,11 +154,8 @@ export default function TutorialCards({ onComplete, play, className = "" }: Tuto
     else setStep(step + 1);
   }
   return (
-    <section
-      className={cn(
-        "w-full rounded-3xl border border-slate-700 bg-slate-900 p-5 sm:p-8",
-        className
-      )}
+    <Panel
+      className={cn("w-full rounded-3xl p-5 sm:p-8", className)}
       aria-label="How to play tutorial"
     >
       <div className="mb-6 flex items-center justify-between gap-3">
@@ -209,7 +206,7 @@ export default function TutorialCards({ onComplete, play, className = "" }: Tuto
           ) : step === 3 ? (
             <Gameplay />
           ) : (
-            <div className="rounded-xl border border-amber-300/20 bg-amber-300/5 p-5">
+            <Panel tone="warning" className="rounded-xl p-5">
               <h3 className="flex items-center gap-2 font-bold text-amber-300">
                 <Trophy size={19} />
                 Every guess counts
@@ -223,7 +220,7 @@ export default function TutorialCards({ onComplete, play, className = "" }: Tuto
                 <strong>Final score = total points ÷ accepted tokens</strong>, including the end
                 token. Aim for 100/100!
               </p>
-            </div>
+            </Panel>
           )}
         </div>
       </div>
@@ -255,6 +252,6 @@ export default function TutorialCards({ onComplete, play, className = "" }: Tuto
           </Button>
         </div>
       </div>
-    </section>
+    </Panel>
   );
 }

@@ -1,8 +1,8 @@
-import { ArrowLeft, CheckCircle2, LoaderCircle, Trophy, XCircle, Zap } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Trophy, XCircle, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import type useGame from "../game/useGame";
 import type { SoundCue } from "../game/useSound";
-import { Button } from "../theme";
+import { Button, CodeBlock, LoadingStatus, Panel } from "../theme";
 import cn from "../utils/classnames";
 import { averageScore, formatPoints, pointsForAttempt } from "../utils/scoring";
 import { visibleWhitespace } from "../utils/tokens";
@@ -88,23 +88,20 @@ export default function GameScreen({
         </span>
       </div>
       {game.phase === "error" ? (
-        <div role="alert" className="mt-6 rounded-2xl border border-rose-400/30 bg-rose-400/10 p-6">
+        <Panel tone="danger" role="alert" className="mt-6 p-6">
           <h2 className="font-bold text-rose-300">Round interrupted</h2>
           <p className="mt-2 text-sm text-slate-300">{game.status}</p>
           <Button className="mt-4" onClick={onBack}>
             Back to setup
           </Button>
-        </div>
+        </Panel>
       ) : (
         game.step && <CardDeck key={game.step.tokenCount} game={game} play={play} />
       )}
-      <div
+      <Panel
         aria-live="polite"
-        className={cn("mt-5 rounded-2xl border p-5", {
-          "border-slate-700 bg-slate-900": !game.feedback,
-          "border-lime-300/30 bg-lime-300/10": correct === true,
-          "border-rose-400/40 bg-rose-400/10": correct === false,
-        })}
+        tone={correct === true ? "success" : correct === false ? "danger" : "neutral"}
+        className="mt-5 p-5"
       >
         {game.feedback ? (
           <>
@@ -125,9 +122,9 @@ export default function GameScreen({
                 <p className="arcade-label mt-4 text-rose-300">
                   The response this choice would produce
                 </p>
-                <pre className="mt-2 max-h-36 overflow-auto whitespace-pre-wrap break-all rounded-lg bg-slate-950/60 p-3 font-mono text-sm text-rose-200">
+                <CodeBlock tone="danger" className="mt-2 max-h-36">
                   {visibleWhitespace(game.feedback.candidateText)}
-                </pre>
+                </CodeBlock>
               </>
             )}
             <p className="mt-3 text-sm leading-6 text-slate-400">{game.feedback.explanation}</p>
@@ -139,12 +136,11 @@ export default function GameScreen({
           </p>
         )}
         {game.phase === "loading" && (
-          <p role="status" className="mt-3 flex items-center gap-2 text-xs text-violet-300">
-            <LoaderCircle size={13} className="animate-spin" />
+          <LoadingStatus iconSize={13} className="mt-3 text-xs">
             Dealing the next hand…
-          </p>
+          </LoadingStatus>
         )}
-      </div>
+      </Panel>
       <p className="mt-5 pb-6 text-center text-xs text-slate-600">
         Wrong cards stay flipped. Your response doesn’t change. Each new miss halves the reward.
       </p>
