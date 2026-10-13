@@ -18,6 +18,7 @@ import { explanationMessages } from "./explanationPrompt";
 import { MAX_TOKENS, MODEL_ID } from "./types";
 import type { GameSettings, GuessFeedback, TokenExplanation, TokenStep } from "./types";
 
+env.experimental_useCrossOriginStorage = true;
 env.allowLocalModels = false;
 const CHAT_TEMPLATE_OPTIONS = {
   tokenize: false,
